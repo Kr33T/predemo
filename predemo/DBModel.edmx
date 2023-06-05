@@ -1,0 +1,272 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Хранилище predemoModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="books">
+          <Key>
+            <PropertyRef Name="bookId" />
+          </Key>
+          <Property Name="bookId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="author" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="releaseDate" Type="date" />
+          <Property Name="publisher" Type="nvarchar" MaxLength="50" />
+          <Property Name="countPages" Type="int" Nullable="false" />
+          <Property Name="image" Type="nvarchar(max)" />
+          <Property Name="price" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="booksOrder">
+          <Key>
+            <PropertyRef Name="orderId" />
+            <PropertyRef Name="bookId" />
+          </Key>
+          <Property Name="orderId" Type="int" Nullable="false" />
+          <Property Name="bookId" Type="int" Nullable="false" />
+          <Property Name="quantity" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="orders">
+          <Key>
+            <PropertyRef Name="orderId" />
+          </Key>
+          <Property Name="orderId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="customerFIO" Type="nvarchar" MaxLength="100" />
+          <Property Name="orderDate" Type="date" Nullable="false" />
+          <Property Name="pickupPointId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="pickupPoints">
+          <Key>
+            <PropertyRef Name="pointId" />
+          </Key>
+          <Property Name="pointId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="address" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__booksOrde__bookI__70DDC3D8">
+          <End Role="books" Type="Self.books" Multiplicity="1" />
+          <End Role="booksOrder" Type="Self.booksOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="books">
+              <PropertyRef Name="bookId" />
+            </Principal>
+            <Dependent Role="booksOrder">
+              <PropertyRef Name="bookId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__booksOrde__order__6FE99F9F">
+          <End Role="orders" Type="Self.orders" Multiplicity="1" />
+          <End Role="booksOrder" Type="Self.booksOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="orders">
+              <PropertyRef Name="orderId" />
+            </Principal>
+            <Dependent Role="booksOrder">
+              <PropertyRef Name="orderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__orders__pickupPo__6B24EA82">
+          <End Role="pickupPoints" Type="Self.pickupPoints" Multiplicity="1" />
+          <End Role="orders" Type="Self.orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="pickupPoints">
+              <PropertyRef Name="pointId" />
+            </Principal>
+            <Dependent Role="orders">
+              <PropertyRef Name="pickupPointId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище predemoModelContainer">
+          <EntitySet Name="books" EntityType="Self.books" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="booksOrder" EntityType="Self.booksOrder" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="orders" EntityType="Self.orders" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="pickupPoints" EntityType="Self.pickupPoints" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__booksOrde__bookI__70DDC3D8" Association="Self.FK__booksOrde__bookI__70DDC3D8">
+            <End Role="books" EntitySet="books" />
+            <End Role="booksOrder" EntitySet="booksOrder" />
+          </AssociationSet>
+          <AssociationSet Name="FK__booksOrde__order__6FE99F9F" Association="Self.FK__booksOrde__order__6FE99F9F">
+            <End Role="orders" EntitySet="orders" />
+            <End Role="booksOrder" EntitySet="booksOrder" />
+          </AssociationSet>
+          <AssociationSet Name="FK__orders__pickupPo__6B24EA82" Association="Self.FK__orders__pickupPo__6B24EA82">
+            <End Role="pickupPoints" EntitySet="pickupPoints" />
+            <End Role="orders" EntitySet="orders" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="predemoModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="predemoEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="books" EntityType="predemoModel.books" />
+          <EntitySet Name="booksOrder" EntityType="predemoModel.booksOrder" />
+          <EntitySet Name="orders" EntityType="predemoModel.orders" />
+          <EntitySet Name="pickupPoints" EntityType="predemoModel.pickupPoints" />
+          <AssociationSet Name="FK__booksOrde__bookI__70DDC3D8" Association="predemoModel.FK__booksOrde__bookI__70DDC3D8">
+            <End Role="books" EntitySet="books" />
+            <End Role="booksOrder" EntitySet="booksOrder" />
+          </AssociationSet>
+          <AssociationSet Name="FK__booksOrde__order__6FE99F9F" Association="predemoModel.FK__booksOrde__order__6FE99F9F">
+            <End Role="orders" EntitySet="orders" />
+            <End Role="booksOrder" EntitySet="booksOrder" />
+          </AssociationSet>
+          <AssociationSet Name="FK__orders__pickupPo__6B24EA82" Association="predemoModel.FK__orders__pickupPo__6B24EA82">
+            <End Role="pickupPoints" EntitySet="pickupPoints" />
+            <End Role="orders" EntitySet="orders" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="books">
+          <Key>
+            <PropertyRef Name="bookId" />
+          </Key>
+          <Property Name="bookId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="author" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="releaseDate" Type="DateTime" Precision="0" />
+          <Property Name="publisher" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="countPages" Type="Int32" Nullable="false" />
+          <Property Name="image" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="price" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="booksOrder" Relationship="predemoModel.FK__booksOrde__bookI__70DDC3D8" FromRole="books" ToRole="booksOrder" />
+        </EntityType>
+        <EntityType Name="booksOrder">
+          <Key>
+            <PropertyRef Name="orderId" />
+            <PropertyRef Name="bookId" />
+          </Key>
+          <Property Name="orderId" Type="Int32" Nullable="false" />
+          <Property Name="bookId" Type="Int32" Nullable="false" />
+          <Property Name="quantity" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="books" Relationship="predemoModel.FK__booksOrde__bookI__70DDC3D8" FromRole="booksOrder" ToRole="books" />
+          <NavigationProperty Name="orders" Relationship="predemoModel.FK__booksOrde__order__6FE99F9F" FromRole="booksOrder" ToRole="orders" />
+        </EntityType>
+        <EntityType Name="orders">
+          <Key>
+            <PropertyRef Name="orderId" />
+          </Key>
+          <Property Name="orderId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="customerFIO" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="orderDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="pickupPointId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="booksOrder" Relationship="predemoModel.FK__booksOrde__order__6FE99F9F" FromRole="orders" ToRole="booksOrder" />
+          <NavigationProperty Name="pickupPoints" Relationship="predemoModel.FK__orders__pickupPo__6B24EA82" FromRole="orders" ToRole="pickupPoints" />
+        </EntityType>
+        <EntityType Name="pickupPoints">
+          <Key>
+            <PropertyRef Name="pointId" />
+          </Key>
+          <Property Name="pointId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="address" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="orders" Relationship="predemoModel.FK__orders__pickupPo__6B24EA82" FromRole="pickupPoints" ToRole="orders" />
+        </EntityType>
+        <Association Name="FK__booksOrde__bookI__70DDC3D8">
+          <End Type="predemoModel.books" Role="books" Multiplicity="1" />
+          <End Type="predemoModel.booksOrder" Role="booksOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="books">
+              <PropertyRef Name="bookId" />
+            </Principal>
+            <Dependent Role="booksOrder">
+              <PropertyRef Name="bookId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__booksOrde__order__6FE99F9F">
+          <End Type="predemoModel.orders" Role="orders" Multiplicity="1" />
+          <End Type="predemoModel.booksOrder" Role="booksOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="orders">
+              <PropertyRef Name="orderId" />
+            </Principal>
+            <Dependent Role="booksOrder">
+              <PropertyRef Name="orderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__orders__pickupPo__6B24EA82">
+          <End Type="predemoModel.pickupPoints" Role="pickupPoints" Multiplicity="1" />
+          <End Type="predemoModel.orders" Role="orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="pickupPoints">
+              <PropertyRef Name="pointId" />
+            </Principal>
+            <Dependent Role="orders">
+              <PropertyRef Name="pickupPointId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище predemoModelContainer" CdmEntityContainer="predemoEntities">
+          <EntitySetMapping Name="books">
+            <EntityTypeMapping TypeName="predemoModel.books">
+              <MappingFragment StoreEntitySet="books">
+                <ScalarProperty Name="price" ColumnName="price" />
+                <ScalarProperty Name="image" ColumnName="image" />
+                <ScalarProperty Name="countPages" ColumnName="countPages" />
+                <ScalarProperty Name="publisher" ColumnName="publisher" />
+                <ScalarProperty Name="releaseDate" ColumnName="releaseDate" />
+                <ScalarProperty Name="author" ColumnName="author" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="bookId" ColumnName="bookId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="booksOrder">
+            <EntityTypeMapping TypeName="predemoModel.booksOrder">
+              <MappingFragment StoreEntitySet="booksOrder">
+                <ScalarProperty Name="quantity" ColumnName="quantity" />
+                <ScalarProperty Name="bookId" ColumnName="bookId" />
+                <ScalarProperty Name="orderId" ColumnName="orderId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="orders">
+            <EntityTypeMapping TypeName="predemoModel.orders">
+              <MappingFragment StoreEntitySet="orders">
+                <ScalarProperty Name="pickupPointId" ColumnName="pickupPointId" />
+                <ScalarProperty Name="orderDate" ColumnName="orderDate" />
+                <ScalarProperty Name="customerFIO" ColumnName="customerFIO" />
+                <ScalarProperty Name="orderId" ColumnName="orderId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="pickupPoints">
+            <EntityTypeMapping TypeName="predemoModel.pickupPoints">
+              <MappingFragment StoreEntitySet="pickupPoints">
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="pointId" ColumnName="pointId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

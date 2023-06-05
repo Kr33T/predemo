@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="ea25c8792ce44fdb8341e0b63c0e6c7a" Name="Diagram1">
+        <EntityTypeShape EntityType="predemoModel.books" Width="1.5" PointX="3" PointY="5.5" />
+        <EntityTypeShape EntityType="predemoModel.booksOrder" Width="1.5" PointX="5.25" PointY="1" />
+        <EntityTypeShape EntityType="predemoModel.orders" Width="1.5" PointX="3" PointY="0.875" />
+        <EntityTypeShape EntityType="predemoModel.pickupPoints" Width="1.5" PointX="0.75" PointY="1.25" />
+        <AssociationConnector Association="predemoModel.FK__booksOrde__bookI__70DDC3D8" />
+        <AssociationConnector Association="predemoModel.FK__booksOrde__order__6FE99F9F" />
+        <AssociationConnector Association="predemoModel.FK__orders__pickupPo__6B24EA82" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
