@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -132,13 +133,30 @@ namespace predemo
             SaveFileDialog sfd = new SaveFileDialog();
             PdfDocument document = new PdfDocument();
             document.Info.Title = $"Талон для получения заказа №{order.orderId}";
-            PdfPage page = new PdfPage();
+            PdfPage page = document.AddPage();
             XGraphics gfx = XGraphics.FromPdfPage(page);
             XPdfFontOptions options = new XPdfFontOptions(PdfFontEncoding.Unicode, PdfFontEmbedding.Always);
             XFont regFont = new XFont("Comic sans ms", 20);
             XFont boldFont = new XFont("Comic sans ms", 20, XFontStyle.Bold, options);
-
-            gfx.DrawString($"Получатель: {order.customerFIO}", regFont, XBrushes.Black);
+            int height = -355;
+            gfx.DrawString($"Получатель: {order.customerFIO}", regFont, XBrushes.Black, new XRect(0, height, page.Width, page.Height), XStringFormat.Center);
+            height += 25;
+            gfx.DrawString($"Дата заказа: {order.orderDate.ToString("dd MMM. yyyy")}", regFont, XBrushes.Black, new XRect(0, height, page.Width, page.Height), XStringFormat.Center);
+            height += 25;
+            gfx.DrawString($"Адрес получения заказа: {order.pickupPoints.address}", regFont, XBrushes.Black, new XRect(0, height, page.Width, page.Height), XStringFormat.Center);
+            height += 25;
+            gfx.DrawString($"Состав заказа: {order.customerFIO}", regFont, XBrushes.Black, new XRect(0, height, page.Width, page.Height), XStringFormat.Center);
+            height += 25;
+            int i = 1;
+            foreach (var item in DBHelper.e.booksOrder.Where(x=>x.orderId == order.orderId))
+            {
+                cartItems ci = values.cartItems.FirstOrDefault(x=>x.book.bookId == item.bookId);
+                gfx.DrawString($"{i++}. {item.books.name} - {item.books.price} руб. * {ci.count} шт.", regFont, XBrushes.Black, new XRect(0, height, page.Width, page.Height), XStringFormat.Center);
+                height += 25;
+            }
+            sfd.FileName = $"Талон для получения заказа №{order.orderId}.pdf";
+            document.Save(sfd.FileName);
+            Process.Start(sfd.FileName);
         }
 
         private void pickupPointCB_SelectionChanged(object sender, SelectionChangedEventArgs e)
