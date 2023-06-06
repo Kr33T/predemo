@@ -135,9 +135,7 @@ namespace predemo
             document.Info.Title = $"Талон для получения заказа №{order.orderId}";
             PdfPage page = document.AddPage();
             XGraphics gfx = XGraphics.FromPdfPage(page);
-            XPdfFontOptions options = new XPdfFontOptions(PdfFontEncoding.Unicode, PdfFontEmbedding.Always);
             XFont regFont = new XFont("Comic sans ms", 20);
-            XFont boldFont = new XFont("Comic sans ms", 20, XFontStyle.Bold, options);
             int height = -355;
             gfx.DrawString($"Получатель: {order.customerFIO}", regFont, XBrushes.Black, new XRect(0, height, page.Width, page.Height), XStringFormat.Center);
             height += 25;
